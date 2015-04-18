@@ -31,4 +31,3 @@ class ContactForm2(forms.Form):
 
 class ContactForm3(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
-
