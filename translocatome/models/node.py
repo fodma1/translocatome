@@ -18,6 +18,7 @@ class Node(models.Model):
 
             return node
 
+        # TODO @fodma1: Use something more specific than Exception eg. DoesNotExists
         except Exception:
             pass
 
@@ -29,9 +30,11 @@ class Node(models.Model):
 
             return node
 
+        # TODO @fodma1: Use something more specific than Exception eg. DoesNotExists
         except Exception:
             pass
 
         node = Node(uni_prot_ac=query_uni_prot_ac, gene_name=query_gene_name)
         node.save()
+
         return node

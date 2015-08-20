@@ -1,9 +1,10 @@
 from optparse import make_option
 
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from translocatome.consts import field_name_to_index
+from translocatome.input_tranlations import FIELD_NAME_TO_INDEX, DIRECTNESS_TRANSLATIONS
 from translocatome.models import Node, Interaction, Meta
+from translocatome.models.interaction import EffectValue
 
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
@@ -25,10 +26,10 @@ class Command(BaseCommand):
 
                 target_node = self.get_target_node(data)
 
-                print '#' * 10 + '\n'
-                print source_node
+                interaction = self.get_interaction(data, source_node, target_node)
+                meta = self.get_meta(data, interaction)
 
-                print target_node
+                print meta
 
     @staticmethod
     def parse_line(line):
@@ -38,7 +39,7 @@ class Command(BaseCommand):
     def convert_line_to_data(line):
         data = {}
         for i in range(len(line)):
-            data[field_name_to_index[i]] = line[i]
+            data[FIELD_NAME_TO_INDEX[i]] = line[i]
         return data
 
     @staticmethod
@@ -48,3 +49,31 @@ class Command(BaseCommand):
     @staticmethod
     def get_target_node(data):
         return Node.get_or_create_node_safely(data['Target_UniProtAC'], data['Target_GeneName'])
+
+    @staticmethod
+    def get_interaction(data, source_node, target_node):
+        interaction = Interaction(
+            source_node=source_node,
+            target_node=target_node,
+            interaction_type=data['InteractionType'],
+            edge_type=int(data['Edge_type']),
+            directness=DIRECTNESS_TRANSLATIONS[data['Directness']],
+            effect_all=EffectValue.create_object_from_raw_data(data['Effect_ALL']),
+            effect_final=EffectValue.create_object_from_raw_data(data['Effect_FINAL'])
+        )
+        interaction.save()
+
+        # TODO @fodma1: Make these methods on Interaction!
+        interaction.add_biological_process(data['Biol_Process'])
+        interaction.add_score_value(data['Score'])
+        interaction.int_abrev = data['Int_Abrev'].strip()
+        interaction.add_network_flags(data)
+
+        interaction.save()
+        return interaction
+
+    @staticmethod
+    def get_meta(data, interaction):
+        return Meta(
+            interaction=interaction,
+        )
