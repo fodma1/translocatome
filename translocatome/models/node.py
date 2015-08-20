@@ -1,42 +1,37 @@
-from django.db import models
-
-
-class UniProtAc(models.Model):
-    value = models.CharField(max_length=50, unique=True)
-
-
-class GeneName(models.Model):
-    value = models.CharField(max_length=50, unique=True)
+from django.db import models, IntegrityError
 
 
 class Node(models.Model):
-    uni_prot_ac = models.ForeignKey(UniProtAc)
-    gene_name = models.ForeignKey(GeneName)
+    uni_prot_ac = models.CharField(max_length=50, unique=True)
+    gene_name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return 'Node:uni_prot_ac<{uni_prot_ac}>, gene_name<{gene_name}>'.format(uni_prot_ac=self.uni_prot_ac, gene_name=self.gene_name)
 
     @staticmethod
-    def get_by_uniprot_ac(uniprot_ac):
-        uni_prot_ac_obj = UniProtAc.objects.get_by_secondary_key(value=uniprot_ac)
-        return Node.objects.get_by_secondary_key(uniprot_ac=uni_prot_ac_obj)
-
-    @staticmethod
-    def get_by_gene_name(gene_name):
-        gene_name_obj = GeneName.objects.get_by_secondary_key(value=gene_name)
-        return Node.objects.get_by_secondary_key(gene_name=gene_name_obj)
-
-    @classmethod
-    def create_if_not_exists(cls, uniprot_ac, gene_name):
+    def get_or_create_node_safely(query_uni_prot_ac, query_gene_name):
         try:
-            # TODO @fodma1: Throw error, if they are not the same
-            uniprot_ac_obj = cls.get_by_uniprot_ac(uniprot_ac)
-            cls.get_by_gene_name(gene_name)
-            return Node.objects.get_by_secondary_key(uniprot_ac=uniprot_ac_obj)
-        except Exception:
-            uniprot_ac_obj = UniProtAc(value=uniprot_ac)
-            uniprot_ac_obj.save()
+            node = Node.objects.get(uni_prot_ac=query_uni_prot_ac)
 
-            gene_name_obj = GeneName(value=gene_name)
-            gene_name_obj.save()
+            if node.gene_name != query_gene_name:
+                raise IntegrityError
 
-            node = Node(uniprot_ac=uniprot_ac_obj, gene_name=gene_name_obj)
-            node.save()
             return node
+
+        except Exception:
+            pass
+
+        try:
+            node = Node.objects.get(gene_name=query_gene_name)
+
+            if node.uni_prot_ac != query_uni_prot_ac:
+                raise IntegrityError
+
+            return node
+
+        except Exception:
+            pass
+
+        node = Node(uni_prot_ac=query_uni_prot_ac, gene_name=query_gene_name)
+        node.save()
+        return node
