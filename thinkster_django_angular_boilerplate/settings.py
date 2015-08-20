@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'compressor',
     'authentication',
     'posts',
+    'translocatome',
 )
 
 MIDDLEWARE_CLASSES = (
