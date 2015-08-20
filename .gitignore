@@ -1,6 +1,9 @@
 # Python compiled byte code
 *.pyc
 
+# Idea project folder
+.idea
+
 # SQLite3 database
 *.sqlite3
 
