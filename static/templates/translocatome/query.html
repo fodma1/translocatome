@@ -11,7 +11,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="source_uni_prot_ac">UniProt AC:</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="source_uni_prot_ac" placeholder="Start typing the Uni Prot AC!" typeahead="alert($viewValue)" typeahead-loading="loadingNodes" typeahead-no-results="noResults"/>
+                                    <input class="form-control" ng-model="source_node_uni_prot_ac" type="text" id="source_uni_prot_ac" placeholder="Start typing the Uni Prot AC!" typeahead="node.uni_prot_ac for node in queryNodesByUniProtAc($viewValue)| limitTo:8" typeahead-loading="loadingNodes" typeahead-no-results="noResults"/>
                                     <i ng-show="loadingNodes" class="glyphicon glyphicon-refresh"></i>
                                     <div ng-show="noResults">
                                         <i class="glyphicon glyphicon-remove"></i> No Results Found

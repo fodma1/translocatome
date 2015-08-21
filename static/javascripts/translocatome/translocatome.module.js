@@ -7,5 +7,5 @@
         ]);
 
     angular
-        .module('thinkster.translocatome.controllers', []);
+        .module('thinkster.translocatome.controllers', ['ui.bootstrap']);
 })();

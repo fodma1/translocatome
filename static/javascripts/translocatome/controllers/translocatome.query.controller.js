@@ -15,14 +15,12 @@
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {
-            return $http.get('/translocatome/api/query-nodes', {
+            return $http.get('api/translocatome/api/query-nodes', {
                 params: {
                     uni_prot_ac: uniProtAc
                 }
             }).then(function(response) {
-                return response.data.nodes.map(function(node) {
-                    return node.uni_prot_ac;
-                });
+                return response.data.nodes;
             });
         };
 

@@ -33,8 +33,10 @@
 
 .source {
   background-color: #2ecc71;
+  padding: 30px;
 }
 
 .target {
   background-color: #9b59b6;
+  padding: 30px;
 }
