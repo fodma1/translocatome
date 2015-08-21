@@ -68,7 +68,7 @@ EFFECT_VALUE_TYPES = (
 
 class EffectValue(models.Model):
     type = models.SmallIntegerField(choices=EFFECT_VALUE_TYPES)
-    value = models.FloatField()
+    value = models.FloatField(null=True)
 
     @staticmethod
     def create_object_from_raw_data(raw_data):
@@ -117,6 +117,9 @@ class Interaction(models.Model):
         process_objects = []
 
         for process_name in process_names:
+            if process_name == 'N/A':
+                continue
+
             try:
                 process = BiologicalProcess.objects.get(value=BIOLOGICAL_PROCESSES_VALUES[process_name])
                 # TODO @fodma1: Use something more specific than Exception eg. DoesNotExists

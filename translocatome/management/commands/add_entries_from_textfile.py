@@ -2,7 +2,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
-from translocatome.input_tranlations import FIELD_NAME_TO_INDEX, DIRECTNESS_TRANSLATIONS
+from translocatome.input_tranlations import FIELD_NAME_TO_INDEX, DIRECTNESS_TRANSLATIONS, ENTRY_STATE_VALUES, REVIEWED_VALUES
 from translocatome.models import Node, Interaction, Meta
 from translocatome.models.interaction import EffectValue
 
@@ -18,7 +18,7 @@ class Command(BaseCommand):
         with open(file_name, 'r') as input_file:
             self.parse_line(input_file.readline())
 
-            for i in range(15):
+            for i in range(1500):
                 line = self.parse_line(input_file.readline())
                 data = self.convert_line_to_data(line)
 
@@ -29,7 +29,7 @@ class Command(BaseCommand):
                 interaction = self.get_interaction(data, source_node, target_node)
                 meta = self.get_meta(data, interaction)
 
-                print meta
+                print i
 
     @staticmethod
     def parse_line(line):
@@ -74,6 +74,18 @@ class Command(BaseCommand):
 
     @staticmethod
     def get_meta(data, interaction):
-        return Meta(
+        meta = Meta(
             interaction=interaction,
+            entry_state=ENTRY_STATE_VALUES[data['EntryType']],
+            reviewed=REVIEWED_VALUES[data['Reviewed']],
+            comment=data['Comment'],
+            curators_comment=data['Personal_Comment']
         )
+        meta.save()
+
+        meta.add_data_sources(data['DataSource'])
+        meta.add_sources(data['Sources'])
+        meta.add_references(data['References'])
+
+        meta.save()
+        return meta

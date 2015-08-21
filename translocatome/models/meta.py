@@ -3,7 +3,7 @@ from django.db import models
 from authentication.models import Account
 
 from interaction import Interaction
-
+from translocatome.input_tranlations import SOURCES_VALUES, REFERENCE_VALUE_MANUAL_CURATION, DATA_SOURCE_TRANSLATIONS
 
 class Source(models.Model):
     value = models.CharField(max_length=32)
@@ -52,12 +52,84 @@ ENTRY_STATES = (
 
 class Meta(models.Model):
     interaction = models.ForeignKey(Interaction)
-    data_source = models.ManyToManyField(DataSource)
+    data_source = models.ManyToManyField(DataSource, null=True)
     sources = models.ManyToManyField(Source)
-    references = models.ManyToManyField(Reference)
+    references = models.ManyToManyField(Reference, null=True)
     comment = models.CharField(max_length=500)
     entry_state = models.SmallIntegerField(choices=ENTRY_STATES)
-    curator_name = models.ForeignKey(Account)
-    reviewed = models.BinaryField()
+    # Make it null for now!
+    curator_name = models.ForeignKey(Account, null=True)
+    reviewed = models.BooleanField(default=False)
     curators_comment = models.CharField(max_length=500)
 
+    def add_data_sources(self, raw_data):
+        data_source_names = [data_source_name.strip() for data_source_name in raw_data.split('|')]
+
+        data_source_objects = []
+
+        for data_source_name in data_source_names:
+            if data_source_name == 'NA':
+                continue
+
+            try:
+                data_source = DataSource.objects.get(value=DATA_SOURCE_TRANSLATIONS[data_source_name])
+            except Exception:
+                data_source = DataSource(value=DATA_SOURCE_TRANSLATIONS[data_source_name])
+                data_source.save()
+
+            data_source_objects.append(data_source)
+
+        self.data_source.add(*data_source_objects)
+        self.save()
+
+    def add_sources(self, raw_data):
+        source_names = [SOURCES_VALUES[source_name.strip()] for source_name in raw_data.split('|')]
+
+        source_objects = []
+
+        for source_name in source_names:
+            try:
+                source = Source.objects.get(value=source_name)
+            #TODO @fodma1: Find a better Exception class!
+            except Exception:
+                source = Source(value=source_name)
+                source.save()
+
+            source_objects.append(source)
+
+        self.sources.add(*source_objects)
+        self.save()
+
+    def add_references(self, raw_data):
+        reference_values = [source_name.strip() for source_name in raw_data.split('|')]
+
+        reference_objects = []
+
+        for reference_value in reference_values:
+            if reference_value.isdigit():
+                try:
+                    reference_object = Reference.objects.get(reference_type=REFERENCE_TYPE_PUBMED, value=reference_value)
+
+                except Exception:
+                    reference_object = Reference(reference_type=REFERENCE_TYPE_PUBMED, value=reference_value)
+                    reference_object.save()
+
+            elif reference_value.startswith('Book'):
+                book_name = reference_value[reference_value.find("(")+1:reference_value.find(")")]
+                try:
+                    reference_object = Reference.objects.get(reference_type=REFERENCE_TYPE_BOOK, value=book_name)
+
+                except Exception:
+                    reference_object = Reference(reference_type=REFERENCE_TYPE_PUBMED, value=book_name)
+                    reference_object.save()
+
+            elif reference_value == REFERENCE_VALUE_MANUAL_CURATION:
+                try:
+                    reference_object = Reference.objects.get(reference_type=REFERENCE_TYPE_MANUAL)
+
+                except Exception:
+                    reference_object = Reference(reference_type=REFERENCE_TYPE_MANUAL)
+                    reference_object.save()
+
+        self.references.add(*reference_objects)
+        self.save()

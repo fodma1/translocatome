@@ -55,3 +55,48 @@ BIOLOGICAL_PROCESSES_VALUES = {
     'PLC': 5,
     'PROLIF': 6,
 }
+
+SOURCES_VALUES = {
+'ACSN': 'ACSN',
+'ARN': 'ARN',
+'CA1': 'CA1',
+'DEPOD': 'DEPOD',
+'FUMIA': 'FUMIA',
+'HumanCyc': 'HumanCyc',
+'MACROPHAGE': 'MACROPHAGE',
+'NRF2-ome': 'NRF2-ome',
+'NetPath': 'NetPath',
+'PANTHER':'PANTHER',
+'PDZBase':'PDZBase',
+'PID':'PID',
+'PhosphoSite':'PhosphoSite',
+'PhosphoSitePlus':'PhosphoSitePlus',
+'Reactome':'Reactome',
+'Reactome-FI':'Reactome-FI',
+'Reactome-Fi':'Reactome-FI',
+'SIGNOR':'SIGNOR',
+'SPIKE':'SPIKE',
+'SignaLink2.0':'SignaLink2.0',
+'manual_:curation':'manual_curation',
+'manual_curation':'manual_curation',
+}
+
+DATA_SOURCE_TRANSLATIONS = {
+    'basePPI': 0,
+    'manual_curation': 1,
+    'signaling_pool': 2,
+}
+
+ENTRY_STATE_VALUES = {
+    'integrated': 0,
+    'manually_reviewed': 1,
+    'DELETED': 2,
+    'REWIRED': 3,
+}
+
+REVIEWED_VALUES = {
+    'YES': True,
+    'NO': False,
+}
+
+REFERENCE_VALUE_MANUAL_CURATION = 'manual_curation'
