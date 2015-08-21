@@ -3,6 +3,7 @@
 
 # Idea project folder
 .idea
+*.iml
 
 # SQLite3 database
 *.sqlite3

@@ -5,6 +5,7 @@ from rest_framework_nested import routers
 from authentication.views import AccountViewSet, LoginView, LogoutView
 from posts.views import AccountPostsViewSet, PostViewSet
 from thinkster_django_angular_boilerplate.views import IndexView
+import translocatome.urls
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
@@ -15,7 +16,8 @@ accounts_router = routers.NestedSimpleRouter(
 )
 accounts_router.register(r'posts', AccountPostsViewSet)
 
-urlpatterns = patterns(
+urlpatterns = translocatome.urls.urlpatterns
+urlpatterns += patterns(
     '',
 
     url(r'^api/v1/', include(router.urls)),
