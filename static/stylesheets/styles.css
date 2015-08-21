@@ -30,3 +30,11 @@
 .account .account__username {
   font-weight: bold;
 }
+
+.source {
+  background-color: #2ecc71;
+}
+
+.target {
+  background-color: #9b59b6;
+}
