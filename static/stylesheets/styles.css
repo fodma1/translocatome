@@ -34,9 +34,11 @@
 .source {
   background-color: #2ecc71;
   padding: 30px;
+  margin: 10px;
 }
 
 .target {
   background-color: #9b59b6;
   padding: 30px;
+  margin: 10px;
 }

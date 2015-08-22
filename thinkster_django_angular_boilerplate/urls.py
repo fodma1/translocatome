@@ -16,10 +16,10 @@ accounts_router = routers.NestedSimpleRouter(
 )
 accounts_router.register(r'posts', AccountPostsViewSet)
 
-urlpatterns = translocatome.urls.urlpatterns
-urlpatterns += patterns(
+urlpatterns = patterns(
     '',
 
+    url(r'^api/translocatome/', include(translocatome.urls)),
     url(r'^api/v1/', include(router.urls)),
     url(r'^api/v1/', include(accounts_router.urls)),
     url(r'^api/v1/auth/login/$', LoginView.as_view(), name='login'),

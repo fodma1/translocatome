@@ -50,7 +50,7 @@ ENTRY_STATES = (
 )
 
 
-class Meta(models.Model):
+class MetaData(models.Model):
     interaction = models.ForeignKey(Interaction)
     data_source = models.ManyToManyField(DataSource, null=True)
     sources = models.ManyToManyField(Source)
