@@ -83,8 +83,8 @@ class Command(BaseCommand):
                 interaction=interaction,
                 entry_state=ENTRY_STATE_VALUES[data['EntryType']],
                 reviewed=REVIEWED_VALUES[data['Reviewed']],
-                comment=data['Comment'].encode('utf-8'),
-                curators_comment=data['Personal_Comment']
+                comment=data['Comment'].decode('utf-8'),
+                curators_comment=data['Personal_Comment'].decode('utf-8')
             )
             meta.save()
 
@@ -93,7 +93,7 @@ class Command(BaseCommand):
             meta.add_references(data['References'])
 
             meta.save()
-        except Exception:
+        except Exception as ex:
             print data
-            raise Exception
+            raise ex
         return meta

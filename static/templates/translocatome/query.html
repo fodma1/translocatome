@@ -11,7 +11,18 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="source_uni_prot_ac">UniProt AC:</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" ng-model="source.node.uni_prot_ac" type="text" id="source_uni_prot_ac" placeholder="Start typing the Uni Prot AC!" typeahead="displayAsString(node) as node.uni_prot_ac for node in queryNodesByUniProtAc($viewValue)| limitTo:8" typeahead-loading="loadingNodes" typeahead-no-results="noResults" typeahead-on-select="onSourceSelect($item, $model, $label)" typeahead-min-length='3'/>
+                                    <input
+                                            class="form-control"
+                                            ng-model="sourceNode.uni_prot_ac"
+                                            type="text"
+                                            id="source_uni_prot_ac"
+                                            placeholder="Start typing the Uni Prot AC!"
+                                            typeahead="displayAsString(node) as node.uni_prot_ac for node in queryNodesByUniProtAc($viewValue)| limitTo:8"
+                                            typeahead-loading="loadingNodes"
+                                            typeahead-no-results="noResults"
+                                            typeahead-on-select="onSourceSelect($item, $model, $label)"
+                                            typeahead-min-length='3'
+                                            />
                                     <i ng-show="loadingNodes" class="glyphicon glyphicon-refresh"></i>
                                     <div ng-show="noResults">
                                         <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -23,7 +34,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="source_gene_name">Gene Name:</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" ng-model="source.node.gene_name" type="text" id="source_gene_name" placeholder="Start typing the gene name!"/>
+                                    <input class="form-control" ng-model="sourceNode.gene_name" type="text" id="source_gene_name" placeholder="Start typing the gene name!"/>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +55,22 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="target_uni_prot_ac">UniProt AC:</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="target_uni_prot_ac" placeholder="Start typing the Uni Prot AC!"/>
+                                    <input
+                                            class="form-control"
+                                            ng-model="targetNode.uni_prot_ac"
+                                            type="text"
+                                            id="target_uni_prot_ac"
+                                            placeholder="Start typing the Uni Prot AC!"
+                                            typeahead="displayAsString(node) as node.uni_prot_ac for node in queryNodesByUniProtAc($viewValue)| limitTo:8"
+                                            typeahead-loading="loadingNodes"
+                                            typeahead-no-results="noResults"
+                                            typeahead-on-select="onTargetSelect($item, $model, $label)"
+                                            typeahead-min-length='3'
+                                            />
+                                    <i ng-show="loadingNodes" class="glyphicon glyphicon-refresh"></i>
+                                    <div ng-show="noResults">
+                                        <i class="glyphicon glyphicon-remove"></i> No Results Found
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +78,7 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-4" for="target_gene_name">Gene Name:</label>
                                 <div class="col-sm-8">
-                                    <input class="form-control" type="text" id="target_gene_name" placeholder="Start typing the gene name!"/>
+                                    <input class="form-control" ng-model="targetNode.gene_name" type="text" id="target_gene_name" placeholder="Start typing the gene name!"/>
                                 </div>
                             </div>
                         </div>

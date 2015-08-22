@@ -18,7 +18,7 @@ class Command(BaseCommand):
         with open(file_name, 'r') as input_file:
             header = self.parse_line(input_file.readline())
 
-            field_no = 12
+            field_no = 17
             print 'Field name: ', header[field_no]
 
             kinds = {}

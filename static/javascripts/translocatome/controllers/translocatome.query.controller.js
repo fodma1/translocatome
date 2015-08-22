@@ -12,6 +12,9 @@
         function init() {
             $scope.source_nodes = [];
             $scope.target_nodes = [];
+
+            $scope.sourceNode = {uni_prot_ac: '', gene_name: ''};
+            $scope.targetNode = {uni_prot_ac: '', gene_name: ''};
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {
@@ -24,15 +27,14 @@
             });
         };
 
-        $scope.onSourceSelect = function($item, $model, $label) {
-            $scope.source.node.uni_prot_ac = $item.uni_prot_ac;
-            $scope.source.node.gene_name = $item.gene_name;
+        $scope.onSourceSelect = function($item) {
+            $scope.sourceNode.uni_prot_ac = $item.uni_prot_ac;
+            $scope.sourceNode.gene_name = $item.gene_name;
         };
 
-        $scope.displayAsString = function(node) {
-            if (node) {
-                return 'UniProtAC: ' + node.uni_prot_ac + ' GeneName: ' + node.gene_name;
-            }
+        $scope.onTargetSelect = function($item) {
+            $scope.targetNode.uni_prot_ac = $item.uni_prot_ac;
+            $scope.targetNode.gene_name = $item.gene_name;
         };
 
         init();

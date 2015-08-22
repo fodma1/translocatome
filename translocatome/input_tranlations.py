@@ -97,6 +97,7 @@ ENTRY_STATE_VALUES = {
 REVIEWED_VALUES = {
     'YES': True,
     'NO': False,
+    'NA': False,
 }
 
 REFERENCE_VALUE_MANUAL_CURATION = 'manual_curation'
