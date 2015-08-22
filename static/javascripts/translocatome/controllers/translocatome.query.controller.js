@@ -15,6 +15,7 @@
 
             $scope.sourceNode = {uni_prot_ac: '', gene_name: ''};
             $scope.targetNode = {uni_prot_ac: '', gene_name: ''};
+            $scope.selectedInteraction = undefined;
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {

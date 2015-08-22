@@ -7,5 +7,5 @@
         ]);
 
     angular
-        .module('thinkster.translocatome.controllers', ['ui.bootstrap']);
+        .module('thinkster.translocatome.controllers', ['ui.bootstrap', 'scrollable-table']);
 })();
