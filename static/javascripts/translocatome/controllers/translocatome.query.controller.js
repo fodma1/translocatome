@@ -15,6 +15,9 @@
 
             $scope.selectedInteraction = undefined;
             $scope.interactions_with_meta = [];
+
+            $scope.loadingNodes = {};
+            $scope.noResults = {};
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {
@@ -27,12 +30,28 @@
             });
         };
 
+        $scope.queryNodesByGeneName = function(geneName) {
+            return $http.get('api/translocatome/query-nodes/', {
+                params: {
+                    gene_name: geneName
+                }
+            }).then(function(response) {
+                return response.data.nodes;
+            });
+        };
+
         $scope.onSourceSelect = function($item) {
             $scope.sourceNode = angular.copy($item);
         };
 
         $scope.onTargetSelect = function($item) {
             $scope.targetNode = angular.copy($item);
+        };
+
+        $scope.swapNodes = function() {
+            var tempNode = $scope.sourceNode;
+            $scope.sourceNode = $scope.targetNode;
+            $scope.targetNode = tempNode;
         };
 
         $scope.fetchInteractionsWithMeta = function() {
