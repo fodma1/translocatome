@@ -1,6 +1,7 @@
 from django.db import models
 
 from .node import Node
+from .metadata import MetaData
 
 from translocatome.input_tranlations import RAW_EFFECT_VALUE_BOTH, RAW_EFFECT_VALUE_UNKNOWN, BIOLOGICAL_PROCESSES_VALUES
 
@@ -22,7 +23,7 @@ BIOLOGICAL_PROCESS_VALUE_MAPK = 4
 BIOLOGICAL_PROCESS_VALUE_PLC = 5
 BIOLOGICAL_PROCESS_VALUE_PROLIF = 6
 
-BIOLOGICAL_PROCESS = (
+BIOLOGICAL_PROCESS_VALUES = (
     (BIOLOGICAL_PROCESS_VALUE_APOPTOSIS, 'apoptosis'),
     (BIOLOGICAL_PROCESS_VALUE_CRI, 'cri'),
     (BIOLOGICAL_PROCESS_VALUE_DDR, 'ddr'),
@@ -34,7 +35,7 @@ BIOLOGICAL_PROCESS = (
 
 
 class BiologicalProcess(models.Model):
-    value = models.SmallIntegerField(choices=BIOLOGICAL_PROCESS)
+    value = models.SmallIntegerField(choices=BIOLOGICAL_PROCESS_VALUES)
 
 
 EDGE_TYPES_VALUES = (
@@ -94,6 +95,8 @@ class Interaction(models.Model):
     source_node = models.ForeignKey(Node, related_name='source')
     target_node = models.ForeignKey(Node, related_name='target')
 
+    meta_data = models.ForeignKey(MetaData)
+
     # TODO @fodma1: Make a use of interaction type! Discuss the details with Dani!
     interaction_type = models.CharField(max_length=50)
     edge_type = models.PositiveSmallIntegerField(choices=EDGE_TYPES_VALUES)
@@ -148,3 +151,21 @@ class Interaction(models.Model):
         self.is_in_skeleton = '#SIG' in data and data['#SIG'].strip() == '#SIG'
 
         self.save()
+
+    def get_list_object(self):
+        biological_processes = ' | '.join([dict(BIOLOGICAL_PROCESS_VALUES)[biological_process['value']] for biological_process in self.biological_process.all().values()])
+        return {
+            'interaction_type': self.interaction_type,
+            'edge_type': str(self.edge_type),
+            'directness': dict(DIRECTNESS_VALUES)[self.directness],
+            'biological_process': biological_processes,
+            'score': str(self.score),
+            'is_in_full': self.is_in_full,
+            'is_in_medium': self.is_in_medium,
+            'is_in_small': self.is_in_small,
+            'is_in_skeleton': self.is_in_skeleton,
+            'meta': {
+                'entry_state': self.meta_data.get_entry_state(),
+                'reviewed': self.meta_data.reviewed,
+            },
+        }

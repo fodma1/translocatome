@@ -13,9 +13,8 @@
             $scope.source_nodes = [];
             $scope.target_nodes = [];
 
-            $scope.sourceNode = {uni_prot_ac: '', gene_name: ''};
-            $scope.targetNode = {uni_prot_ac: '', gene_name: ''};
             $scope.selectedInteraction = undefined;
+            $scope.interactions_with_meta = [];
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {
@@ -29,13 +28,29 @@
         };
 
         $scope.onSourceSelect = function($item) {
-            $scope.sourceNode.uni_prot_ac = $item.uni_prot_ac;
-            $scope.sourceNode.gene_name = $item.gene_name;
+            $scope.sourceNode = angular.copy($item);
         };
 
         $scope.onTargetSelect = function($item) {
-            $scope.targetNode.uni_prot_ac = $item.uni_prot_ac;
-            $scope.targetNode.gene_name = $item.gene_name;
+            $scope.targetNode = angular.copy($item);
+        };
+
+        $scope.fetchInteractionsWithMeta = function() {
+            var params = {};
+
+            if ($scope.sourceNode) {
+                params.source_node_id = $scope.sourceNode.id;
+            }
+
+            if ($scope.targetNode) {
+                params.target_node_id = $scope.targetNode.id;
+            }
+
+            $http.get('api/translocatome/query-interactions/', {
+                params: params
+            }).then(function(response) {
+                $scope.interactions_with_meta  = response.data.interactions;
+            });
         };
 
         init();

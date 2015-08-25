@@ -1,8 +1,9 @@
+from django.http import HttpResponseBadRequest
 from django.views.decorators.http import require_GET
 
 from utils.http_response import HttpResponseJSON
 
-from models import Node
+from models import Node, Interaction
 
 @require_GET
 def query_nodes(request):
@@ -21,3 +22,23 @@ def query_nodes(request):
         data['nodes'] = Node.objects.filter(**query_params).values()
 
     return HttpResponseJSON(data)
+
+@require_GET
+def query_interactions(request):
+    source_node_id = request.GET.get('source_node_id')
+    target_node_id = request.GET.get('target_node_id')
+
+    query_dict = {}
+
+    if source_node_id:
+        query_dict['source_node_id'] = source_node_id
+
+    if target_node_id:
+        query_dict['target_node_id'] = target_node_id
+
+    if not query_dict:
+        return HttpResponseBadRequest()
+
+    interactions = Interaction.objects.select_related('biological_preocess', 'meta', 'source_node', 'target_node').filter(**query_dict)
+
+    return HttpResponseJSON({'interactions': [interaction.get_list_object() for interaction in interactions]})

@@ -2,7 +2,6 @@ from django.db import models
 
 from authentication.models import Account
 
-from interaction import Interaction
 from translocatome.input_tranlations import SOURCES_VALUES, REFERENCE_VALUE_MANUAL_CURATION, DATA_SOURCE_TRANSLATIONS
 
 class Source(models.Model):
@@ -42,7 +41,7 @@ ENTRY_STATE_MANUALLY_REVIEWED = 1
 ENTRY_STATE_DELETED = 2
 ENTRY_STATE_REWIRED = 3
 
-ENTRY_STATES = (
+ENTRY_STATE_VALUES = (
     (ENTRY_STATE_INTEGRATED, 'integrated'),
     (ENTRY_STATE_MANUALLY_REVIEWED, 'manually_rewired'),
     (ENTRY_STATE_DELETED, 'deleted'),
@@ -51,12 +50,11 @@ ENTRY_STATES = (
 
 
 class MetaData(models.Model):
-    interaction = models.ForeignKey(Interaction)
     data_source = models.ManyToManyField(DataSource, null=True)
     sources = models.ManyToManyField(Source)
     references = models.ManyToManyField(Reference, null=True)
     comment = models.CharField(max_length=500)
-    entry_state = models.SmallIntegerField(choices=ENTRY_STATES)
+    entry_state = models.SmallIntegerField(choices=ENTRY_STATE_VALUES)
     # Make it null for now!
     curator_name = models.ForeignKey(Account, null=True)
     reviewed = models.BooleanField(default=False)
@@ -131,5 +129,10 @@ class MetaData(models.Model):
                     reference_object = Reference(reference_type=REFERENCE_TYPE_MANUAL)
                     reference_object.save()
 
+            reference_objects.append(reference_object)
+
         self.references.add(*reference_objects)
         self.save()
+
+    def get_entry_state(self):
+        return dict(ENTRY_STATE_VALUES)[self.entry_state]

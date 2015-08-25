@@ -27,8 +27,9 @@ class Command(BaseCommand):
 
                 target_node = self.get_target_node(data)
 
-                interaction = self.get_interaction(data, source_node, target_node)
-                meta = self.get_meta(data, interaction)
+                meta = self.get_meta(data)
+
+                interaction = self.get_interaction(data, source_node, target_node, meta)
 
                 print counter
                 counter += 1
@@ -55,10 +56,11 @@ class Command(BaseCommand):
         return node
 
     @staticmethod
-    def get_interaction(data, source_node, target_node):
+    def get_interaction(data, source_node, target_node, meta_data):
         interaction = Interaction(
             source_node=source_node,
             target_node=target_node,
+            meta_data=meta_data,
             interaction_type=data['InteractionType'],
             edge_type=int(data['Edge_type']),
             directness=DIRECTNESS_TRANSLATIONS[data['Directness']],
@@ -77,10 +79,9 @@ class Command(BaseCommand):
         return interaction
 
     @staticmethod
-    def get_meta(data, interaction):
+    def get_meta(data):
         try:
             meta = MetaData(
-                interaction=interaction,
                 entry_state=ENTRY_STATE_VALUES[data['EntryType']],
                 reviewed=REVIEWED_VALUES[data['Reviewed']],
                 comment=data['Comment'].decode('utf-8'),
