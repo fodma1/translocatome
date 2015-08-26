@@ -154,6 +154,16 @@
                     </div>
                 </div>
                 <div class="row">
+                    <p class="toggle-show"><a ng-click="showColumnSorter=!showColumnSorter"><i class="chevron-btn glyphicon" ng-class="{'glyphicon-chevron-right': showColumnSorter, 'glyphicon-chevron-down': !showColumnSorter}"></i>Columns</a></p>
+                    <div ng-show="showColumnSorter">
+                        <ul ui-sortable ng-model="interactionColumns">
+                            <li ng-repeat="column in interactionColumns" class="draggable-column-container">
+                                <div class="draggable-column">{{ column }}</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="hits" ng-show="interactions_with_meta">
                         <scrollable-table watch="interactions_with_meta">
                             <table class="table table-striped table-bordered">

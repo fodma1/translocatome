@@ -18,6 +18,44 @@
 
             $scope.loadingNodes = {};
             $scope.noResults = {};
+
+            $scope.showColumnSorter = false;
+            $scope.displayedInteractionColumns = [
+                'A',
+                'B',
+                'C',
+                'D',
+                'E',
+                'F'
+            ];
+            $scope.interactionColumns = [
+                'A',
+                'B',
+                'C',
+                'D',
+                'E',
+                'F',
+                'G',
+                'H',
+                'I',
+                'J',
+                'K',
+                'L',
+                'M',
+                'N',
+                'O',
+                'P',
+                'Q',
+                'R',
+                'S',
+                'T',
+                'U',
+                'V',
+                'W',
+                'X',
+                'Y',
+                'Z'
+            ];
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {
