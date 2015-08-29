@@ -3,17 +3,13 @@
 
     angular
         .module('thinkster.translocatome.controllers')
-        .controller('TranslocatomeQueryController', TranslocatomeQueryController);
+        .controller('TranslocatomeInteractionController', TranslocatomeInteractionController);
 
-    TranslocatomeQueryController.$inject = ['$scope', '$http'];
+    TranslocatomeInteractionController.$inject = ['$scope', '$http'];
 
-    function TranslocatomeQueryController($scope, $http) {
+    function TranslocatomeInteractionController($scope, $http) {
 
         function init() {
-            $scope.source_nodes = [];
-            $scope.target_nodes = [];
-
-            $scope.selectedInteraction = undefined;
             $scope.interactions_with_meta = [];
 
             $scope.loadingNodes = {};
@@ -90,6 +86,10 @@
             var tempNode = $scope.sourceNode;
             $scope.sourceNode = $scope.targetNode;
             $scope.targetNode = tempNode;
+        };
+
+        $scope.removeColumn = function(columnIndex) {
+            $scope.interactionColumns.splice(columnIndex, 1);
         };
 
         $scope.fetchInteractionsWithMeta = function() {

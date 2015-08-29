@@ -21,7 +21,8 @@
                                             typeahead-loading="loadingNodes.source_uni_prot_ac"
                                             typeahead-no-results="noResults.source_uni_prot_ac"
                                             typeahead-on-select="onSourceSelect($item)"
-                                            typeahead-min-length='3'
+                                            typeahead-min-length="3"
+                                            ng-disabled="sourceNode.id"
                                             />
                                     <div class="typeahead-status">
                                         <i ng-show="loadingNodes.source_uni_prot_ac" class="glyphicon glyphicon-refresh"></i>
@@ -46,7 +47,8 @@
                                             typeahead-loading="loadingNodes.source_gene_name"
                                             typeahead-no-results="noResults.source_gene_name"
                                             typeahead-on-select="onSourceSelect($item)"
-                                            typeahead-min-length='3'
+                                            typeahead-min-length="3"
+                                            ng-disabled="sourceNode.id"
                                             />
                                     <div class="typeahead-status">
                                         <i ng-show="loadingNodes.source_gene_name" class="glyphicon glyphicon-refresh"></i>
@@ -94,7 +96,8 @@
                                             typeahead-loading="loadingNodes.target_uni_prot_ac"
                                             typeahead-no-results="noResults.target_uni_prot_ac"
                                             typeahead-on-select="onTargetSelect($item)"
-                                            typeahead-min-length='3'
+                                            typeahead-min-length="3"
+                                            ng-disabled="targetNode.id"
                                             />
                                     <div class="typeahead-status">
                                         <i ng-show="loadingNodes.target_uni_prot_ac" class="glyphicon glyphicon-refresh"></i>
@@ -119,7 +122,8 @@
                                             typeahead-loading="loadingNodes.target_gene_name"
                                             typeahead-no-results="noResults.target_gene_name"
                                             typeahead-on-select="onTargetSelect($item)"
-                                            typeahead-min-length='3'
+                                            typeahead-min-length="3"
+                                            ng-disabled="targetNode.id"
                                             />
                                     <div class="typeahead-status">
                                         <i ng-show="loadingNodes.target_gene_name" class="glyphicon glyphicon-refresh"></i>
@@ -157,8 +161,8 @@
                     <p class="toggle-show"><a ng-click="showColumnSorter=!showColumnSorter"><i class="chevron-btn glyphicon" ng-class="{'glyphicon-chevron-right': showColumnSorter, 'glyphicon-chevron-down': !showColumnSorter}"></i>Columns</a></p>
                     <div ng-show="showColumnSorter">
                         <ul ui-sortable ng-model="interactionColumns">
-                            <li ng-repeat="column in interactionColumns" class="draggable-column-container">
-                                <div class="draggable-column">{{ column }}</div>
+                            <li ng-repeat="(columnIndex, column) in interactionColumns" class="draggable-column-container">
+                                <div class="btn btn-primary">{{ column }} <a class="btn-danger"><i class="glyphicon glyphicon-remove" ng-click="removeColumn(columnIndex)"></i></a></div>
                             </li>
                         </ul>
                     </div>

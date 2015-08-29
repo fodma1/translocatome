@@ -24,4 +24,4 @@ class HttpResponseJSON(HttpResponse):
         content = convert(content) or {}
         if not (isinstance(content, basestring)):
             content = json.dumps(content, cls=DjangoJSONEncoder)
-        super(HttpResponseJSON, self).__init__(content=content, content_type='application/simplejson')
+        super(HttpResponseJSON, self).__init__(content=content, content_type='application/json')
