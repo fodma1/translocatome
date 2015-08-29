@@ -12,7 +12,7 @@ EFFECT_TO_VALUE = {
     '-3': 'negative',
 }
 
-FIELD_NAME_TO_INDEX = [
+INTERACTION_FILE_FIELD_NAME_TO_INDEX = [
     'Source_UniProtAC',
     'Source_GeneName',
     'InteractionType',
@@ -37,6 +37,14 @@ FIELD_NAME_TO_INDEX = [
     '#MEDIUM',
     '#SMALL',
     '#SIG',
+]
+
+NODE_META_FILE_FIELD_NAME_TO_INDEX = [
+    'UniProtAC',
+    'Base_Activity',
+    'Base_Concentration',
+    'Cancer_Driver',
+    'Cancer_Indirect_Target',
 ]
 
 DIRECTNESS_TRANSLATIONS = {
@@ -98,6 +106,11 @@ REVIEWED_VALUES = {
     'YES': True,
     'NO': False,
     'NA': False,
+}
+
+BASE_CONCENTRATION_FIELD_VALUES = {
+    '1': True,
+    '0': False,
 }
 
 REFERENCE_VALUE_MANUAL_CURATION = 'manual_curation'

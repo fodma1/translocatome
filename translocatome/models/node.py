@@ -4,6 +4,10 @@ from django.db import models
 class Node(models.Model):
     uni_prot_ac = models.CharField(max_length=50)
     gene_name = models.CharField(max_length=50)
+    base_activity = models.FloatField(null=True)
+    base_concentration = models.FloatField(null=True)
+    cancer_driver = models.FloatField(null=True)
+    cancer_indirect_driver = models.FloatField(null=True)
 
     def natural_key(self):
         return self.id, self.uni_prot_ac, self.gene_name
