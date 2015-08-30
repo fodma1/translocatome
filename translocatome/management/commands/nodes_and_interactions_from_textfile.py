@@ -2,7 +2,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
-from translocatome.input_tranlations import FIELD_NAME_TO_INDEX, DIRECTNESS_TRANSLATIONS, ENTRY_STATE_VALUES, REVIEWED_VALUES
+from translocatome.input_tranlations import INTERACTION_FILE_FIELD_NAME_TO_INDEX, DIRECTNESS_TRANSLATIONS, ENTRY_STATE_VALUES, REVIEWED_VALUES
 from translocatome.models import Node, Interaction, MetaData
 from translocatome.models.interaction import EffectValue
 
@@ -29,7 +29,7 @@ class Command(BaseCommand):
 
                 meta = self.get_meta(data)
 
-                interaction = self.get_interaction(data, source_node, target_node, meta)
+                self.get_interaction(data, source_node, target_node, meta)
 
                 print counter
                 counter += 1
@@ -42,7 +42,7 @@ class Command(BaseCommand):
     def convert_line_to_data(line):
         data = {}
         for i in range(len(line)):
-            data[FIELD_NAME_TO_INDEX[i]] = line[i]
+            data[INTERACTION_FILE_FIELD_NAME_TO_INDEX[i]] = line[i]
         return data
 
     @staticmethod

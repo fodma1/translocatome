@@ -88,6 +88,6 @@
   margin: 5px;
 }
 
-.draggable-column {
-  margin: 5px;
+.clear {
+  cursor: pointer;
 }

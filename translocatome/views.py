@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.http import HttpResponseBadRequest
 from django.views.decorators.http import require_GET
 
@@ -39,6 +40,10 @@ def query_interactions(request):
     if not query_dict:
         return HttpResponseBadRequest()
 
-    interactions = Interaction.objects.select_related('biological_preocess', 'meta', 'source_node', 'target_node').filter(**query_dict)
+    interactions = serializers.serialize('json', Interaction.objects.filter(**query_dict), use_natural_foreign_keys=True, use_natural_primary_keys=True)
 
-    return HttpResponseJSON({'interactions': [interaction.get_list_object() for interaction in interactions]})
+    return HttpResponseJSON(interactions)
+
+    # interactions = Interaction.objects.select_related('biological_preocess', 'meta', 'source_node', 'target_node').filter(**query_dict)
+    #
+    # return HttpResponseJSON({'interactions': [interaction.get_list_object() for interaction in interactions]})
