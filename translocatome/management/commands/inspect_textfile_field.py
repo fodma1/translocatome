@@ -1,3 +1,5 @@
+import pprint
+
 from optparse import make_option
 
 from django.core.management.base import BaseCommand
@@ -18,28 +20,26 @@ class Command(BaseCommand):
         with open(file_name, 'r') as input_file:
             header = self.parse_line(input_file.readline())
 
-            field_no = 17
-            print 'Field name: ', header[field_no]
+            fields = {}
+            for column_name in header:
+                fields[column_name] = {}
 
-            kinds = {}
             for line in input_file.readlines():
                 processed_line = self.parse_line(line)
-                values = processed_line[field_no].split('|')
-                for raw_value in values:
-                    value = raw_value.strip()
-                    if value in kinds.keys():
-                        kinds[value] += 1
-                    else:
-                        kinds[value] = 1
-                # try:
-                #     value = processed_line[field_no]
-                #     if value in kinds.keys():
-                #         kinds[value] += 1
-                #     else:
-                #         kinds[value] = 1
-                # except:
-                #     pass
-            kind_keys = kinds.keys()
-            kind_keys.sort()
-            for kind in kind_keys:
-                print kind, ' : ', kinds[kind]
+
+                for field_no in range(len(processed_line)):
+                    values = processed_line[field_no].split('|')
+                    kinds = {}
+
+                    for raw_value in values:
+                        value = raw_value.strip()
+                        if value in kinds.keys():
+                            kinds[value] += 1
+                        else:
+                            kinds[value] = 1
+
+                    for kind in kinds:
+                            fields[header[field_no]][kind] = fields[header[field_no]].get(kind, 0) + kinds[kind]
+            pp = pprint.PrettyPrinter(indent=4)
+            del fields['UniProtAC']
+            pp.pprint(fields)
