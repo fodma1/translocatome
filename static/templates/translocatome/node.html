@@ -58,6 +58,7 @@
                         <th sortable-header col="base_concentration">Base Concentration</th>
                         <th sortable-header col="cancer_driver">Cancer driver</th>
                         <th sortable-header col="cancer_indirect_driver">Cancer indirect driver</th>
+                        <th>Edit</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -68,6 +69,7 @@
                         <td>{{ node.base_concentration }}</td>
                         <td>{{ node.cancer_driver }}</td>
                         <td>{{ node.cancer_indirect_driver }}</td>
+                        <td><a class="btn btn-primary" ng-click="openNodeEditor(node)">Edit node</a></td>
                     </tr>
                     </tbody>
                 </table>

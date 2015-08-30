@@ -5,9 +5,9 @@
         .module('thinkster.translocatome.controllers')
         .controller('TranslocatomeNodeController', TranslocatomeNodeController);
 
-    TranslocatomeNodeController.$inject = ['$scope', '$http'];
+    TranslocatomeNodeController.$inject = ['$scope', '$http', 'ngDialog'];
 
-    function TranslocatomeNodeController($scope, $http) {
+    function TranslocatomeNodeController($scope, $http, ngDialog) {
 
         function init() {
             $scope.search = {};
@@ -43,6 +43,16 @@
                 params: queryParams
             }).then(function(response) {
                 $scope.nodes = response.data.nodes;
+            });
+        };
+
+        $scope.openNodeEditor = function(node) {
+            ngDialog.open({
+                template: 'static/templates/translocatome/node.editor.html',
+                controller: 'TranslocatomeNodeEditorController',
+                data: {
+                    node:node
+                }
             });
         };
 

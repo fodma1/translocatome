@@ -10,6 +10,7 @@
         .module('thinkster.translocatome.controllers', [
             'ui.bootstrap',
             'scrollable-table',
-            'ui.sortable'
+            'ui.sortable',
+            'ngDialog'
         ]);
 })();
