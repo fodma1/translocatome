@@ -108,9 +108,4 @@ REVIEWED_VALUES = {
     'NA': False,
 }
 
-BASE_CONCENTRATION_FIELD_VALUES = {
-    '1': True,
-    '0': False,
-}
-
 REFERENCE_VALUE_MANUAL_CURATION = 'manual_curation'
