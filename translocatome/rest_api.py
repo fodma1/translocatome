@@ -29,6 +29,7 @@ def node(request, node_id=None):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
 
     try:
         node_object = Node.objects.get(id=node_id)
@@ -48,4 +49,4 @@ def node(request, node_id=None):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
