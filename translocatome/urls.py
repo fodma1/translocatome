@@ -7,5 +7,5 @@ urlpatterns = patterns('translocatome.views',
 
 urlpatterns += patterns('translocatome.rest_api',
                         (r'rest-api/query-nodes/$', 'query_nodes'),
-                        (r'rest-api/node/(?P<node_id>[0-9]+)/', 'node'),
+                        (r'rest-api/node(?:/(?P<node_id>[0-9]+))?/$', 'node'),
                         )

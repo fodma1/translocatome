@@ -22,12 +22,22 @@ def query_nodes(request):
 
     return Response(nodes)
 
-@api_view(['GET', 'POST'])
-def node(request, node_id):
+@api_view(['POST', 'DELETE', 'GET', 'PUT'])
+def node(request, node_id=None):
+    if request.method == 'POST':
+        serializer = NodeSerializer(data=request.DATA)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
     try:
         node_object = Node.objects.get(id=node_id)
-    except Node.DoesNotExist:
+    except (Node.DoesNotExist, ValueError):
         return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'DELETE':
+        node_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
     if request.method == 'GET':
         serializer = NodeSerializer(node_object)
