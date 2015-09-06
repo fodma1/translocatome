@@ -52,6 +52,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'thinkster_django_angular_boilerplate.middlewares.ExceptionLoggingMiddleware',
 )
 
 ROOT_URLCONF = 'thinkster_django_angular_boilerplate.urls'
@@ -110,7 +111,7 @@ TEMPLATE_DIRS = (
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
-    )
+    ),
 }
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
