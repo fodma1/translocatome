@@ -14,6 +14,7 @@
     "angular": "~1.4.5",
     "angular-bootstrap": "~0.13.3",
     "angular-cookies": "~1.4.5",
+    "angular-growl": "~0.4.0",
     "angular-route": "~1.4.5",
     "angular-scrollable-table": "*",
     "angular-ui-sortable": "~0.13.4",
