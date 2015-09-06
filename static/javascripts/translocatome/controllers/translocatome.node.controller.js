@@ -51,7 +51,7 @@
                 template: 'static/templates/translocatome/node.editor.html',
                 controller: 'TranslocatomeNodeEditorController',
                 data: {
-                    node:node
+                    node:angular.copy(node)
                 }
             });
         };
