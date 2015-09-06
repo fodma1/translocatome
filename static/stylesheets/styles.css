@@ -1,3 +1,16 @@
+.ngdialog {
+  z-index: 9998 !important;
+}
+
+.growl {
+  z-index: 9999;
+  width: 600px !important;
+  float: none !important;
+  top: 40px !important;
+  right: 50% !important;
+  margin-right: -300px !important;
+}
+
 .btn-add-new-post {
   position: fixed;
   bottom: 20px;
@@ -50,8 +63,8 @@
 
 .control-label {
   padding-top: 5px;
-  padding-left: 60px;
-  padding-right: 0px;
+  padding-left: 40px;
+  padding-right: 0;
 }
 
 .node-buttons {
@@ -90,4 +103,8 @@
 
 .clear {
   cursor: pointer;
+}
+
+.ngdialog-content {
+  width: 700px !important;
 }

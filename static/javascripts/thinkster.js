@@ -10,7 +10,8 @@
       'thinkster.layout',
       'thinkster.posts',
       'thinkster.translocatome',
-      'thinkster.utils'
+      'thinkster.utils',
+      'angular-growl'
     ]);
 
   angular
