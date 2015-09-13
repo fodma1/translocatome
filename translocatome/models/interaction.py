@@ -39,10 +39,10 @@ class BiologicalProcess(models.Model):
 
 
 EDGE_TYPES_VALUES = (
-    (1, 1),
-    (2, 2),
-    (3, 3),
-    (4, 4),
+    (0, 1),
+    (1, 2),
+    (2, 3),
+    (3, 4),
 )
 
 DIRECTNESS_DIRECT = 0

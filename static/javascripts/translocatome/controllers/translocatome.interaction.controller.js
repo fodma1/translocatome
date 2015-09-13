@@ -52,25 +52,33 @@
                 'Y',
                 'Z'
             ];
+            loadFields();
+        }
+
+        function loadFields() {
+            $http.get('api/translocatome/api/interaction/fields/')
+                .then(function(response) {
+                    $scope.fields = response.data.fields;
+            });
         }
 
         $scope.queryNodesByUniProtAc = function(uniProtAc) {
-            return $http.get('api/translocatome/query-nodes/', {
+            return $http.get('api/translocatome/rest-api/query-nodes/', {
                 params: {
                     uni_prot_ac: uniProtAc
                 }
             }).then(function(response) {
-                return response.data.nodes;
+                return response.data;
             });
         };
 
         $scope.queryNodesByGeneName = function(geneName) {
-            return $http.get('api/translocatome/query-nodes/', {
+            return $http.get('api/translocatome/rest-api/query-nodes/', {
                 params: {
                     gene_name: geneName
                 }
             }).then(function(response) {
-                return response.data.nodes;
+                return response.data;
             });
         };
 
@@ -103,10 +111,10 @@
                 params.target_node_id = $scope.targetNode.id;
             }
 
-            $http.get('api/translocatome/query-interactions/', {
+            $http.get('api/translocatome/rest-api/query-interactions/', {
                 params: params
             }).then(function(response) {
-                $scope.interactions_with_meta  = response.data.interactions;
+                $scope.interactions_with_meta  = response.data;
             });
         };
 

@@ -39,10 +39,10 @@
                 queryParams.gene_name = geneName;
             }
 
-            $http.get('api/translocatome/query-nodes/', {
+            $http.get('api/translocatome/rest-api/query-nodes/', {
                 params: queryParams
             }).then(function(response) {
-                $scope.nodes = response.data.nodes;
+                $scope.nodes = response.data;
             });
         };
 

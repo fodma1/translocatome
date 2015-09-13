@@ -2,8 +2,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
-from models import Node
+from models import Node, Interaction
 from serializers.node_serializers import NodeSerializer
+from serializers.interaction_serializers import InteractionSerializer
 
 @api_view(['GET'])
 def query_nodes(request):
@@ -18,17 +19,19 @@ def query_nodes(request):
         query_params['gene_name__startswith'] = gene_name
 
     node_objects = Node.objects.filter(**query_params)
-    nodes = NodeSerializer(node_objects, many=True)
+    serializer = NodeSerializer(node_objects, many=True)
 
-    return Response(nodes)
+    return Response(serializer.data)
 
 @api_view(['POST', 'DELETE', 'GET', 'PUT'])
 def node(request, node_id=None):
     if request.method == 'POST':
         serializer = NodeSerializer(data=request.DATA)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
 
     try:
@@ -46,7 +49,28 @@ def node(request, node_id=None):
 
     if request.method == 'PUT':
         serializer = NodeSerializer(node_object, data=request.DATA)
+
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+
         return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def query_interactions(request):
+    source_node_id = request.GET.get('source_node_id')
+    target_node_id = request.GET.get('target_node_id')
+
+    query_dict = {}
+
+    if source_node_id:
+        query_dict['source_node_id'] = source_node_id
+
+    if target_node_id:
+        query_dict['target_node_id'] = target_node_id
+
+    interaction_objects = Interaction.objects.filter(**query_dict)
+    serializer = InteractionSerializer(interaction_objects, many=True)
+
+    return Response(serializer.data)
