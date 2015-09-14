@@ -18,7 +18,7 @@
     .module('thinkster.config', []);
 
   angular
-    .module('thinkster.routes', ['ngRoute']);
+    .module('thinkster.routes', ['ngRoute', 'ui.router']);
 
   angular
     .module('thinkster')
