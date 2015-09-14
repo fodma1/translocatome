@@ -40,23 +40,34 @@
                 controllerAs: 'vm',
                 templateUrl: '/static/templates/authentication/login.html'
             })
-            .state('interaction_list', {
+            .state('interaction', {
                 url: '/translocatome/interaction',
                 controller: 'TranslocatomeInteractionController',
                 templateUrl: '/static/templates/translocatome/interaction.html'
             })
-            .state('node_list', {
+            .state('node', {
                 url: '/translocatome/node',
                 controller: 'TranslocatomeNodeController',
                 templateUrl: '/static/templates/translocatome/node.html'
             })
+            .state('node.edit', {
+                url: '/translocatome/node/:id',
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: 'static/templates/translocatome/node.editor.html',
+                        controller: 'TranslocatomeNodeEditorController'
+                    }).result.finally(function() {
+                            $state.go('^');
+                        });
+                }]
+             })
             .state('user', {
                 url: '/+:username',
                 controller: 'AccountController',
                 controllerAs: 'vm',
                 templateUrl: '/static/templates/accounts/account.html'
             })
-            .state('user_settings', {
+            .state('user.settings', {
                 url: '/+:username/settings',
                 controller: 'AccountSettingsController',
                 controllerAs: 'vm',

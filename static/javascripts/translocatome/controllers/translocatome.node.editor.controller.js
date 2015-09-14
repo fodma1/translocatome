@@ -6,15 +6,27 @@
         .module('thinkster.translocatome.controllers')
         .controller('TranslocatomeNodeEditorController', TranslocatomeNodeEditorController);
 
-    TranslocatomeNodeEditorController.$inject = ['$scope', '$http', 'growl'];
+    TranslocatomeNodeEditorController.$inject = ['$scope', '$http', 'growl', '$stateParams', '$modalInstance'];
 
-    function TranslocatomeNodeEditorController($scope, $http, growl)
+    function TranslocatomeNodeEditorController($scope, $http, growl, $stateParams, $modalInstance)
     {
 
         function init()
         {
-            $scope.node = $scope.ngDialogData.node || {};
+            var nodeId = $stateParams.id;
+            loadNode(nodeId);
             $scope.loading = false;
+        }
+
+        function loadNode(nodeId)
+        {
+            $http.get('api/translocatome/rest-api/node/' + nodeId + '/')
+                .then(function(response)
+                {
+                    $scope.node = response.data;
+                }, function(response) {
+                    growl.addErrorMessage('Errors: ' + response.data);
+                });
         }
 
         $scope.deleteNode = function ()
@@ -69,6 +81,11 @@
                         $scope.loading = false;
                     });
             }
+        };
+
+        $scope.cancel = function ()
+        {
+            $modalInstance.dismiss('cancel');
         };
 
         init();
