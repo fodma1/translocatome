@@ -7,11 +7,11 @@ from translocatome.input_tranlations import RAW_EFFECT_VALUE_BOTH, RAW_EFFECT_VA
 
 
 class InteractionSubtype(models.Model):
-    value = models.CharField(max_length=50)
+    value = models.CharField(max_length=100)
 
 
 class InteractionType(models.Model):
-    value = models.CharField(max_length=50)
+    value = models.CharField(max_length=100)
     subtype = models.ManyToManyField(InteractionSubtype)
 
 
@@ -98,7 +98,7 @@ class Interaction(models.Model):
     meta_data = models.ForeignKey(MetaData)
 
     # TODO @fodma1: Make a use of interaction type! Discuss the details with Dani!
-    interaction_type = models.CharField(max_length=50)
+    interaction_type = models.CharField(max_length=100)
     edge_type = models.PositiveSmallIntegerField(choices=EDGE_TYPES_VALUES)
     directness = models.PositiveSmallIntegerField(choices=DIRECTNESS_VALUES)
     effect_all = models.ForeignKey(EffectValue, related_name='effect_all')

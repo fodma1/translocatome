@@ -23,6 +23,26 @@ def query_nodes(request):
 
     return Response(serializer.data)
 
+
+@api_view(['GET'])
+def query_interactions(request):
+    source_node_id = request.GET.get('source_node_id')
+    target_node_id = request.GET.get('target_node_id')
+
+    query_dict = {}
+
+    if source_node_id:
+        query_dict['source_node_id'] = source_node_id
+
+    if target_node_id:
+        query_dict['target_node_id'] = target_node_id
+
+    interaction_objects = Interaction.objects.filter(**query_dict)
+    serializer = InteractionSerializer(interaction_objects, many=True)
+
+    return Response(serializer.data)
+
+
 @api_view(['POST', 'DELETE', 'GET', 'PUT'])
 def node(request, node_id=None):
     if request.method == 'POST':
@@ -57,20 +77,35 @@ def node(request, node_id=None):
         return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET'])
-def query_interactions(request):
-    source_node_id = request.GET.get('source_node_id')
-    target_node_id = request.GET.get('target_node_id')
+@api_view(['POST', 'DELETE', 'GET', 'PUT'])
+def interaction(request, interaction_id=None):
+    if request.method == 'POST':
+        serializer = InteractionSerializer(data=request.DATA)
 
-    query_dict = {}
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    if source_node_id:
-        query_dict['source_node_id'] = source_node_id
+        return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)
 
-    if target_node_id:
-        query_dict['target_node_id'] = target_node_id
+    try:
+        interaction_object = Interaction.objects.get(id=interaction_id)
+    except (Node.DoesNotExist, ValueError):
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-    interaction_objects = Interaction.objects.filter(**query_dict)
-    serializer = InteractionSerializer(interaction_objects, many=True)
+    if request.method == 'DELETE':
+        interaction_object.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
-    return Response(serializer.data)
+    if request.method == 'GET':
+        serializer = InteractionSerializer(interaction_object)
+        return Response(serializer.data)
+
+    if request.method == 'PUT':
+        serializer = InteractionSerializer(interaction_object, data=request.DATA)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+
+        return Response(str(serializer.errors), status=status.HTTP_400_BAD_REQUEST)

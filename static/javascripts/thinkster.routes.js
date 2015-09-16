@@ -45,6 +45,17 @@
                 controller: 'TranslocatomeInteractionController',
                 templateUrl: '/static/templates/translocatome/interaction.html'
             })
+            .state('interaction.edit', {
+                url: '/:id',
+                onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
+                    $modal.open({
+                        templateUrl: '/static/templates/translocatome/interaction.editor.html',
+                        controller: 'TranslocatomeInteractionEditorController'
+                    }).result.finally(function() {
+                            $state.go('^');
+                        });
+                }]
+            })
             .state('node', {
                 url: '/translocatome/node',
                 controller: 'TranslocatomeNodeController',

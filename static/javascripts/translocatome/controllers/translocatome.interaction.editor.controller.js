@@ -4,64 +4,43 @@
 
     angular
         .module('thinkster.translocatome.controllers')
-        .controller('TranslocatomeNodeEditorController', TranslocatomeNodeEditorController);
+        .controller('TranslocatomeInteractionEditorController', TranslocatomeInteractionEditorController);
 
-    TranslocatomeNodeEditorController.$inject = ['$scope', '$http', 'growl', '$stateParams', '$modalInstance'];
+    TranslocatomeInteractionEditorController.$inject = ['$scope', '$http', 'growl', '$stateParams', '$modalInstance'];
 
-    function TranslocatomeNodeEditorController($scope, $http, growl, $stateParams, $modalInstance)
+    function TranslocatomeInteractionEditorController($scope, $http, growl, $stateParams, $modalInstance)
     {
 
         function init()
         {
-            var nodeId = $stateParams.id;
+            var interactionId = $stateParams.id;
 
-            $scope.node = $scope.node || {};
-            if (nodeId)
+            $scope.interaction = $scope.interaction || {};
+            if (interactionId)
             {
-                loadNode(nodeId);
+                loadInteraction(interactionId);
             }
 
             $scope.loading = false;
         }
 
-        function loadNode(nodeId)
+        function loadInteraction(interactionId)
         {
-            $http.get('api/translocatome/rest-api/node/' + nodeId + '/')
+            $http.get('api/translocatome/rest-api/interaction/' + interactionId + '/')
                 .then(function(response)
                 {
-                    $scope.node = response.data;
+                    $scope.interaction = response.data;
                 }, function(response) {
                     growl.addErrorMessage('Errors: ' + response.data);
                 });
         }
 
-        $scope.deleteNode = function ()
-        {
-            $scope.loading = true;
-            if (confirm('Are you sure you want to delete this node?'))
-            {
-                $http.delete('api/translocatome/rest-api/node/' + $scope.node.id + '/')
-                    .then(function ()
-                    {
-                        growl.addSuccessMessage('successfully deleted');
-                        $scope.cancel();
-                    }, function (response)
-                    {
-                        growl.addErrorMessage('Errors: ' + response.data);
-                    })
-                    .finally(function ()
-                    {
-                        $scope.loading = false;
-                    });
-            }
-        };
-
         $scope.save = function ()
         {
             $scope.loading = true;
-            if ($scope.node.id)
+            if ($scope.interaction.id)
             {
-                $http.put('api/translocatome/rest-api/node/' + $scope.node.id + '/', $scope.node)
+                $http.put('api/translocatome/rest-api/interaction/' + $scope.interaction.id + '/', $scope.interaction)
                     .then(function ()
                     {
                         growl.addSuccessMessage('successfully updated');
@@ -75,10 +54,31 @@
                     });
             } else
             {
-                $http.post('api/translocatome/rest-api/node/', $scope.node)
+                $http.post('api/translocatome/rest-api/interaction/', $scope.interaction)
                     .then(function ()
                     {
                         growl.addSuccessMessage('successfully updated');
+                    }, function (response)
+                    {
+                        growl.addErrorMessage('Errors: ' + response.data);
+                    })
+                    .finally(function ()
+                    {
+                        $scope.loading = false;
+                    });
+            }
+        };
+
+        $scope.deleteInteraction = function()
+        {
+            $scope.loading = true;
+            if (confirm('Are you sure you want to delete this node?'))
+            {
+                $http.delete('api/translocatome/rest-api/interaction/' + $scope.interaction.id + '/')
+                    .then(function ()
+                    {
+                        growl.addSuccessMessage('successfully deleted');
+                        $scope.cancel();
                     }, function (response)
                     {
                         growl.addErrorMessage('Errors: ' + response.data);
