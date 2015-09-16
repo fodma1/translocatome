@@ -51,7 +51,7 @@
                 templateUrl: '/static/templates/translocatome/node.html'
             })
             .state('node.edit', {
-                url: '/translocatome/node/:id',
+                url: '/:id',
                 onEnter: ['$stateParams', '$state', '$modal', function($stateParams, $state, $modal) {
                     $modal.open({
                         templateUrl: 'static/templates/translocatome/node.editor.html',
