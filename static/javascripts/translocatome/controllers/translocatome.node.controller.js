@@ -1,4 +1,5 @@
-(function () {
+(function ()
+{
     'use strict';
 
     angular
@@ -7,52 +8,51 @@
 
     TranslocatomeNodeController.$inject = ['$scope', '$http', 'ngDialog'];
 
-    function TranslocatomeNodeController($scope, $http, ngDialog) {
+    function TranslocatomeNodeController($scope, $http, ngDialog)
+    {
 
-        function init() {
+        function init()
+        {
             $scope.search = {};
         }
 
-        $scope.autoSearchNode = function() {
+        $scope.autoSearchNode = function ()
+        {
             var queryUniProtAc = undefined;
             var queryGeneName = undefined;
 
-            if ($scope.search.uni_prot_ac && $scope.search.uni_prot_ac.length > 2) {
+            if ($scope.search.uni_prot_ac && $scope.search.uni_prot_ac.length > 2)
+            {
                 queryUniProtAc = $scope.search.uni_prot_ac;
             }
 
-            if ($scope.search.gene_name && $scope.search.gene_name.length > 2) {
+            if ($scope.search.gene_name && $scope.search.gene_name.length > 2)
+            {
                 queryGeneName = $scope.search.gene_name;
             }
 
             $scope.searchNode(queryUniProtAc, queryGeneName);
         };
 
-        $scope.searchNode = function(uniProtAc, geneName) {
+        $scope.searchNode = function (uniProtAc, geneName)
+        {
             var queryParams = {};
 
-            if (uniProtAc) {
+            if (uniProtAc)
+            {
                 queryParams.uni_prot_ac = uniProtAc;
             }
 
-            if (geneName) {
+            if (geneName)
+            {
                 queryParams.gene_name = geneName;
             }
 
             $http.get('api/translocatome/rest-api/query-nodes/', {
                 params: queryParams
-            }).then(function(response) {
+            }).then(function (response)
+            {
                 $scope.nodes = response.data;
-            });
-        };
-
-        $scope.openNodeEditor = function(node) {
-            ngDialog.open({
-                template: 'static/templates/translocatome/node.editor.html',
-                controller: 'TranslocatomeNodeEditorController',
-                data: {
-                    node:angular.copy(node)
-                }
             });
         };
 

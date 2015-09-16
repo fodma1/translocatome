@@ -17,6 +17,7 @@
     "angular-growl": "~0.4.0",
     "angular-route": "~1.4.5",
     "angular-scrollable-table": "*",
+    "angular-ui-router": "~0.2.15",
     "angular-ui-sortable": "~0.13.4",
     "bootstrap": "~3.3.0",
     "bootstrap-material-design": "~0.1.5",

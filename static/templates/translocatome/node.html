@@ -39,7 +39,7 @@
                                 </a>
                             </div>
                             <button type="button" class="btn btn-primary" ng-click="searchNode()">Search</button>
-                            <button type="button" class="btn btn-info" ng-click="openNodeEditor()">New node</button>
+                            <button type="button" class="btn btn-info" ui-sref="node.edit">New node</button>
                         </form>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         <td>{{ node.base_concentration }}</td>
                         <td>{{ node.cancer_driver }}</td>
                         <td>{{ node.cancer_indirect_driver }}</td>
-                        <td><a class="btn btn-primary" ng-click="openNodeEditor(node)">Edit node</a></td>
+                        <td><a class="btn btn-primary" ui-sref="node.edit({id:'{{ node.id }}'})">Edit node</a></td>
                     </tr>
                     </tbody>
                 </table>
@@ -80,4 +80,3 @@
         </div>
     </div>
 </div>
-

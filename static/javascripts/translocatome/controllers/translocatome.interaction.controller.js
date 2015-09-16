@@ -1,4 +1,5 @@
-(function () {
+(function ()
+{
     'use strict';
 
     angular
@@ -7,9 +8,11 @@
 
     TranslocatomeInteractionController.$inject = ['$scope', '$http'];
 
-    function TranslocatomeInteractionController($scope, $http) {
+    function TranslocatomeInteractionController($scope, $http)
+    {
 
-        function init() {
+        function init()
+        {
             $scope.interactions_with_meta = [];
 
             $scope.loadingNodes = {};
@@ -55,66 +58,80 @@
             loadFields();
         }
 
-        function loadFields() {
+        function loadFields()
+        {
             $http.get('api/translocatome/api/interaction/fields/')
-                .then(function(response) {
+                .then(function (response)
+                {
                     $scope.fields = response.data.fields;
-            });
+                });
         }
 
-        $scope.queryNodesByUniProtAc = function(uniProtAc) {
+        $scope.queryNodesByUniProtAc = function (uniProtAc)
+        {
             return $http.get('api/translocatome/rest-api/query-nodes/', {
                 params: {
                     uni_prot_ac: uniProtAc
                 }
-            }).then(function(response) {
+            }).then(function (response)
+            {
                 return response.data;
             });
         };
 
-        $scope.queryNodesByGeneName = function(geneName) {
+        $scope.queryNodesByGeneName = function (geneName)
+        {
             return $http.get('api/translocatome/rest-api/query-nodes/', {
                 params: {
                     gene_name: geneName
                 }
-            }).then(function(response) {
+            }).then(function (response)
+            {
                 return response.data;
             });
         };
 
-        $scope.onSourceSelect = function($item) {
+        $scope.onSourceSelect = function ($item)
+        {
             $scope.sourceNode = angular.copy($item);
         };
 
-        $scope.onTargetSelect = function($item) {
+        $scope.onTargetSelect = function ($item)
+        {
             $scope.targetNode = angular.copy($item);
         };
 
-        $scope.swapNodes = function() {
+        $scope.swapNodes = function ()
+        {
             var tempNode = $scope.sourceNode;
             $scope.sourceNode = $scope.targetNode;
             $scope.targetNode = tempNode;
         };
 
-        $scope.removeColumn = function(columnIndex) {
+        $scope.removeColumn = function (columnIndex)
+        {
             $scope.interactionColumns.splice(columnIndex, 1);
         };
 
-        $scope.fetchInteractionsWithMeta = function() {
+        $scope.fetchInteractionsWithMeta = function ()
+        {
             var params = {};
 
-            if ($scope.sourceNode) {
+            if ($scope.sourceNode)
+            {
                 params.source_node_id = $scope.sourceNode.id;
             }
 
-            if ($scope.targetNode) {
+            if ($scope.targetNode)
+            {
                 params.target_node_id = $scope.targetNode.id;
             }
 
             $http.get('api/translocatome/rest-api/query-interactions/', {
                 params: params
-            }).then(function(response) {
-                $scope.interactions_with_meta  = response.data;
+            }).then(function (response)
+            {
+                $scope.interactions_with_meta = response.data;
             });
         };
 

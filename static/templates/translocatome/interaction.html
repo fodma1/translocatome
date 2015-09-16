@@ -4,7 +4,8 @@
             <div class="source node-container">
                 <div class="container-fluid">
                     <div class="row">
-                        <h3>Source Node<span ng-show="sourceNode.id"> | <a href="http://www.uniprot.org/uniprot/{{ sourceNode.uni_prot_ac }}" target="_blank">open on UniProt</a></span></h3>
+                        <h3>Source Node</h3>
+                        <span ng-show="sourceNode.id"><a href="http://www.uniprot.org/uniprot/{{ sourceNode.uni_prot_ac }}" target="_blank">open on UniProt</a> | <a ui-sref="node.edit({id:sourceNode.id})" target="_blank">Edit node</a></span>
                     </div>
                     <form class=".form-horizontal">
                         <div class="row">
@@ -79,7 +80,8 @@
             <div class="target node-container">
                 <div class="container-fluid">
                     <div class="row">
-                        <h3>Target Node<span ng-show="targetNode.id"> | <a href="http://www.uniprot.org/uniprot/{{ targetNode.uni_prot_ac }}" target="_blank">open on UniProt</a></span></h3>
+                        <h3>Target Node</h3>
+                        <span ng-show="targetNode.id"><a href="http://www.uniprot.org/uniprot/{{ targetNode.uni_prot_ac }}" target="_blank">open on UniProt</a> | <a ui-sref="node.edit({id:targetNode.id})" target="_blank">Edit node</a></span>
                     </div>
                     <form class=".form-horizontal">
                         <div class="row">

@@ -41,14 +41,14 @@
                         <input type="number" ng-model="node.cancer_indirect_driver" ng-disabled="loading" placeholder="Cancer indirect driver">
                     </div>
                 </div>
-                <div class="form-group">
-                    <button ng-click="save()">Save changes</button>
-                </div>
-                <div class="form-group">
-
-                    <button ng-click="deleteNode()">Delte node</button>
-                </div>
             </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-success" ng-click="save()">Save changes</button>
+            <button class="btn btn-danger" ng-click="deleteNode()">Delte node</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
         </div>
     </div>
 </div>
