@@ -14,7 +14,13 @@
         function init()
         {
             var nodeId = $stateParams.id;
-            loadNode(nodeId);
+            if (nodeId)
+            {
+                loadNode(nodeId);
+            }
+
+            $scope.node = $scope.node || {};
+
             $scope.loading = false;
         }
 

@@ -56,17 +56,6 @@
             });
         };
 
-        $scope.openNodeEditor = function (node)
-        {
-            ngDialog.open({
-                template: 'static/templates/translocatome/node.editor.html',
-                controller: 'TranslocatomeNodeEditorController',
-                data: {
-                    node: angular.copy(node)
-                }
-            });
-        };
-
         init();
     }
 })();
