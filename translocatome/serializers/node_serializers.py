@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from translocatome.models import Node
 
+
 class NodeSerializer(serializers.ModelSerializer):
 
     class Meta:

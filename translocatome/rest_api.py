@@ -6,6 +6,7 @@ from models import Node, Interaction
 from serializers.node_serializers import NodeSerializer
 from serializers.interaction_serializers import InteractionSerializer
 
+
 @api_view(['GET'])
 def query_nodes(request):
     uni_prot_ac = request.GET.get('uni_prot_ac', '')
@@ -22,6 +23,7 @@ def query_nodes(request):
     serializer = NodeSerializer(node_objects, many=True)
 
     return Response(serializer.data)
+
 
 @api_view(['POST', 'DELETE', 'GET', 'PUT'])
 def node(request, node_id=None):

@@ -67,6 +67,7 @@ EFFECT_VALUE_TYPES = (
     (EFFECT_VALUE_BOTH, 'both'),
 )
 
+
 class EffectValue(models.Model):
     type = models.SmallIntegerField(choices=EFFECT_VALUE_TYPES)
     value = models.FloatField(null=True)

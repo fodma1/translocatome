@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'authentication',
     'posts',
     'translocatome',
+    'test_pep8',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -121,3 +122,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'authentication.Account'
+
+# PEP 8 checker
+TEST_PEP8_DIRS = [BASE_DIR, ]
+TEST_PEP8_EXCLUDE = ['migrations', 'settings.py', 'wsgi.py', ]
+TEST_PEP8_IGNORE = ['E501', ]

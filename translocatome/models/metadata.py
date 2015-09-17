@@ -4,6 +4,7 @@ from authentication.models import Account
 
 from translocatome.input_tranlations import SOURCES_VALUES, REFERENCE_VALUE_MANUAL_CURATION, DATA_SOURCE_TRANSLATIONS
 
+
 class Source(models.Model):
     value = models.CharField(max_length=32)
 
@@ -17,6 +18,7 @@ REFERENCE_TYPES = (
     (REFERENCE_TYPE_BOOK, 'book'),
     (REFERENCE_TYPE_MANUAL, 'manual'),
 )
+
 
 class Reference(models.Model):
     reference_type = models.SmallIntegerField(choices=REFERENCE_TYPES)
@@ -88,8 +90,7 @@ class MetaData(models.Model):
         for source_name in source_names:
             try:
                 source = Source.objects.get(value=source_name)
-            #TODO @fodma1: Find a better Exception class!
-            except Exception:
+            except Source.DoesNotExist:
                 source = Source(value=source_name)
                 source.save()
 
@@ -108,12 +109,12 @@ class MetaData(models.Model):
                 try:
                     reference_object = Reference.objects.get(reference_type=REFERENCE_TYPE_PUBMED, value=reference_value)
 
-                except Exception:
+                except Reference.DoesNotExist:
                     reference_object = Reference(reference_type=REFERENCE_TYPE_PUBMED, value=reference_value)
                     reference_object.save()
 
             elif reference_value.startswith('Book'):
-                book_name = reference_value[reference_value.find("(")+1:reference_value.find(")")]
+                book_name = reference_value[reference_value.find("(") + 1:reference_value.find(")")]
                 try:
                     reference_object = Reference.objects.get(reference_type=REFERENCE_TYPE_BOOK, value=book_name)
 

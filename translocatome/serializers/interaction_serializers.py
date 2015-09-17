@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from translocatome.models import Interaction
 
+
 class InteractionSerializer(serializers.ModelSerializer):
 
     class Meta:
