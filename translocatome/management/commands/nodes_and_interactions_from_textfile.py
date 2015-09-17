@@ -6,6 +6,7 @@ from translocatome.input_tranlations import INTERACTION_FILE_FIELD_NAME_TO_INDEX
 from translocatome.models import Node, Interaction, MetaData
 from translocatome.models.interaction import EffectValue
 
+
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
     option_list = BaseCommand.option_list + (

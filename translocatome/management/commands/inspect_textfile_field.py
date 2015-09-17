@@ -4,6 +4,7 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 
+
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
     option_list = BaseCommand.option_list + (

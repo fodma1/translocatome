@@ -5,6 +5,7 @@ from django.core.management.base import BaseCommand
 from translocatome.input_tranlations import NODE_META_FILE_FIELD_NAME_TO_INDEX
 from translocatome.models import Node
 
+
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
     option_list = BaseCommand.option_list + (
