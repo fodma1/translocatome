@@ -12,6 +12,8 @@
             'ui.bootstrap',
             'scrollable-table',
             'ui.sortable',
-            'ngDialog'
+            'ngDialog',
+            'formly',
+            'formlyBootstrap'
         ]);
 })();
