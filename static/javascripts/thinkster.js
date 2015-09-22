@@ -25,15 +25,16 @@
         .module('thinkster')
         .run(run);
 
-    run.$inject = ['$http'];
-
-    /**
-     * @name run
-     * @desc Update xsrf $http headers to align with Django's defaults
-     */
-    function run($http)
+    run.$inject = ['$http', 'formlyConfig'];
+    function run($http, formlyConfig)
     {
         $http.defaults.xsrfHeaderName = 'X-CSRFToken';
         $http.defaults.xsrfCookieName = 'csrftoken';
+        formlyConfig.setType({
+            name:'tag',
+            template:"<label class='control-label' ng-if='to.label'>{{to.label}}</label>" +
+            "<tags-input ng-model='model[options.key]' ng-attr-placeholder='{{to.placeholder}}'>" +
+            "<auto-complete source='{{to.tags}}'></auto-complete></tags-input>"
+        });
     }
 })();

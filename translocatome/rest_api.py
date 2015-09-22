@@ -99,7 +99,7 @@ def interaction(request, interaction_id=None):
 
     if request.method == 'GET':
         serializer = InteractionSerializer(interaction_object)
-        return Response(serializer.data)
+        return Response(serializer.data_with_fields())
 
     if request.method == 'PUT':
         serializer = InteractionSerializer(interaction_object, data=request.DATA)

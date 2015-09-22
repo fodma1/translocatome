@@ -14,6 +14,7 @@
             'ui.sortable',
             'ngDialog',
             'formly',
-            'formlyBootstrap'
+            'formlyBootstrap',
+            'ngTagsInput'
         ]);
 })();

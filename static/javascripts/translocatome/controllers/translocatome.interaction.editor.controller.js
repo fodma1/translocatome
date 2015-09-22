@@ -20,18 +20,22 @@
             {
                 loadInteraction(interactionId);
             }
-
-            $scope.loading = false;
         }
 
         function loadInteraction(interactionId)
         {
+            $scope.loading = true;
             $http.get('api/translocatome/rest-api/interaction/' + interactionId + '/')
                 .then(function(response)
                 {
-                    $scope.interaction = response.data;
+                    $scope.interaction = response.data.data;
+                    $scope.interactionFields = response.data.fields;
+
                 }, function(response) {
                     growl.addErrorMessage('Errors: ' + response.data);
+                })
+                .finally(function() {
+                    $scope.loading = false;
                 });
         }
 
